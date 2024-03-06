@@ -2,25 +2,38 @@ package io.github.amayaframework.events;
 
 import java.util.Objects;
 
+/**
+ * A class describing the event header that can be used to register and invoke events.
+ */
 public final class Event {
     private final String name;
-    private final EventGroup group;
     private final FirePolicy policy;
 
-    public Event(EventGroup group, String name, FirePolicy policy) {
-        this.group = Objects.requireNonNull(group);
+    /**
+     * Constructs event with the specified name and policy.
+     *
+     * @param name   the specified event name, must be non-null
+     * @param policy the specified fire policy, must be non-null
+     */
+    public Event(String name, FirePolicy policy) {
         this.name = Objects.requireNonNull(name);
         this.policy = Objects.requireNonNull(policy);
     }
 
+    /**
+     * Returns event name.
+     *
+     * @return event name
+     */
     public String getName() {
         return name;
     }
 
-    public EventGroup getGroup() {
-        return group;
-    }
-
+    /**
+     * Returns the fire policy, specified for this event.
+     *
+     * @return {@link FirePolicy} constant
+     */
     public FirePolicy getPolicy() {
         return policy;
     }
@@ -30,19 +43,18 @@ public final class Event {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         var event = (Event) o;
-        return group.equals(event.group) && name.equals(event.name);
+        return name.equals(event.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(group, name);
+        return name.hashCode();
     }
 
     @Override
     public String toString() {
         return "Event{" +
                 "name='" + name + '\'' +
-                ", group='" + group.name + '\'' +
                 ", policy=" + policy +
                 '}';
     }

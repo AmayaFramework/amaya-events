@@ -6,10 +6,10 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public final class ParallelEventManager extends AbstractEventManager {
+final class ParallelEventManager extends AbstractEventManager {
     private final ExecutorService executor;
 
-    public ParallelEventManager(EventRegistry registry, EventTrigger trigger, ExecutorService executor) {
+    ParallelEventManager(EventRegistry registry, EventTrigger trigger, ExecutorService executor) {
         super(registry, trigger);
         this.executor = Objects.requireNonNull(executor);
     }

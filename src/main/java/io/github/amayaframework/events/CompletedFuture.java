@@ -3,9 +3,15 @@ package io.github.amayaframework.events;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @param <T>
+ */
 public final class CompletedFuture<T> implements Future<T> {
     private final T value;
 
+    /**
+     * @param value
+     */
     public CompletedFuture(T value) {
         this.value = value;
     }

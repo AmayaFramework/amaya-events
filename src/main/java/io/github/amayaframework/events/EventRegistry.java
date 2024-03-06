@@ -2,17 +2,42 @@ package io.github.amayaframework.events;
 
 import com.github.romanqed.jfunc.Runnable1;
 
+/**
+ * An interface describing an abstract event registry that supports a basic set of operations
+ * (create, read, update, delete).
+ */
 public interface EventRegistry extends EventProvider {
 
+    /**
+     * Sets the handler for the specified event. The existing handler will be overwritten.
+     *
+     * @param event the specified event, must be non-null
+     * @param body  the specified event handler, must be non-null
+     */
     void set(Event event, Runnable1<?> body);
 
+    /**
+     * Adds the handler to an existing one for the specified event.
+     * If the handler has not been set yet, the specified one will be set.
+     *
+     * @param event the specified event, must be non-null
+     * @param body  the specified event handler, must be non-null
+     */
     void add(Event event, Runnable1<?> body);
 
-    boolean contains(EventGroup group);
-
+    /**
+     * Checks whether the registry contains a handler for the specified event.
+     *
+     * @param event the specified event, may be null
+     * @return true if this registry contains event, false otherwise
+     */
     boolean contains(Event event);
 
-    boolean remove(EventGroup group);
-
+    /**
+     * Removes the handler of the specified event
+     *
+     * @param event
+     * @return
+     */
     boolean remove(Event event);
 }

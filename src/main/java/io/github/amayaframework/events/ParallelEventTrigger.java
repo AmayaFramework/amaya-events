@@ -6,9 +6,16 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
+/**
+ *
+ */
 public final class ParallelEventTrigger extends AbstractEventTrigger {
     private final ExecutorService executor;
 
+    /**
+     * @param provider
+     * @param executor
+     */
     public ParallelEventTrigger(EventProvider provider, ExecutorService executor) {
         super(provider);
         this.executor = Objects.requireNonNull(executor);

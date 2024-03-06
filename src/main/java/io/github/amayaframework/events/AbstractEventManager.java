@@ -7,10 +7,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Future;
 
+/**
+ *
+ */
 public abstract class AbstractEventManager implements EventManager {
     protected final EventRegistry registry;
     protected final EventTrigger trigger;
 
+    /**
+     * @param registry
+     * @param trigger
+     */
     protected AbstractEventManager(EventRegistry registry, EventTrigger trigger) {
         this.registry = Objects.requireNonNull(registry);
         this.trigger = Objects.requireNonNull(trigger);

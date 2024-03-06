@@ -1,11 +1,14 @@
 package io.github.amayaframework.events;
 
-public final class BlockingManagerFactory implements EventManagerFactory {
+/**
+ *
+ */
+public final class BlockingManagerFactory extends AbstractManagerFactory {
 
     @Override
     public EventManager create() {
-        var registry = new TableEventRegistry();
-        var trigger = new BlockingEventTrigger(registry);
+        var registry = configure(new TableEventRegistry());
+        var trigger = configure(new BlockingEventTrigger(registry));
         return new BlockingEventManager(registry, trigger);
     }
 }

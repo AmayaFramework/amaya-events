@@ -67,6 +67,7 @@ public class Main {
 ```
 
 This code will output:
+
 ```
 EVENT 2
 EVENT 1

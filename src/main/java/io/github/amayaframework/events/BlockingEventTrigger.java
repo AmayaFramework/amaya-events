@@ -4,8 +4,14 @@ import com.github.romanqed.jfunc.Runnable1;
 
 import java.util.concurrent.Future;
 
+/**
+ *
+ */
 public final class BlockingEventTrigger extends AbstractEventTrigger {
 
+    /**
+     * @param provider
+     */
     public BlockingEventTrigger(EventProvider provider) {
         super(provider);
     }
