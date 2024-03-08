@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
  */
 public interface EventTrigger {
 
-    Future<Event> fire(Event event, Object context);
+    <T> Future<Event<T>> fire(Event<T> event, T context);
 
-    List<Future<Event>> fire(Iterable<Event> events, Object context);
+    <T> List<Future<Event<T>>> fire(Iterable<Event<T>> events, T context);
 }

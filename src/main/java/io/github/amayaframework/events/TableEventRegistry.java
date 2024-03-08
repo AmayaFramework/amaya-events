@@ -8,11 +8,11 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class TableEventRegistry implements EventRegistry {
-    private final Map<Event, Runnable1<Object>> events;
+    private final Map<Event<?>, Runnable1<?>> events;
 
     @SuppressWarnings("unchecked")
     public TableEventRegistry(Supplier<Map<?, ?>> supplier) {
-        this.events = (Map<Event, Runnable1<Object>>) supplier.get();
+        this.events = (Map<Event<?>, Runnable1<?>>) supplier.get();
     }
 
     public TableEventRegistry() {
@@ -20,38 +20,38 @@ public class TableEventRegistry implements EventRegistry {
     }
 
     @Override
-    public Runnable1<Object> get(Event event) {
-        return events.get(event);
+    @SuppressWarnings("unchecked")
+    public <T> Runnable1<T> get(Event<T> event) {
+        return (Runnable1<T>) events.get(event);
+    }
+
+    @Override
+    public <T> void set(Event<T> event, Runnable1<T> body) {
+        Objects.requireNonNull(event);
+        Objects.requireNonNull(body);
+        events.put(event, body);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void set(Event event, Runnable1<?> body) {
+    public <T> void add(Event<T> event, Runnable1<T> body) {
         Objects.requireNonNull(event);
         Objects.requireNonNull(body);
-        events.put(event, (Runnable1<Object>) body);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void add(Event event, Runnable1<?> body) {
-        Objects.requireNonNull(event);
-        Objects.requireNonNull(body);
-        var handler = events.get(event);
+        var handler = (Runnable1<T>) events.get(event);
         if (handler == null) {
-            events.put(event, (Runnable1<Object>) body);
+            events.put(event, body);
             return;
         }
-        events.put(event, Runnable1.combine(handler, (Runnable1<Object>) body));
+        events.put(event, Runnable1.combine(handler, body));
     }
 
     @Override
-    public boolean contains(Event event) {
+    public boolean contains(Event<?> event) {
         return events.containsKey(event);
     }
 
     @Override
-    public boolean remove(Event event) {
+    public boolean remove(Event<?> event) {
         return events.remove(event) != null;
     }
 }

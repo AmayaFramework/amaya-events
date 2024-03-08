@@ -13,5 +13,5 @@ public interface EventProvider {
      * @param event the specified event, may be null
      * @return {@link Runnable1} instance or null
      */
-    Runnable1<Object> get(Event event);
+    <T> Runnable1<T> get(Event<T> event);
 }

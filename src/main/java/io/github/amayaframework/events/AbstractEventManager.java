@@ -33,37 +33,37 @@ public abstract class AbstractEventManager implements EventManager {
     }
 
     @Override
-    public Runnable1<Object> get(Event event) {
+    public <T> Runnable1<T> get(Event<T> event) {
         return registry.get(event);
     }
 
     @Override
-    public void set(Event event, Runnable1<?> body) {
+    public <T> void set(Event<T> event, Runnable1<T> body) {
         registry.set(event, body);
     }
 
     @Override
-    public void add(Event event, Runnable1<?> body) {
+    public <T> void add(Event<T> event, Runnable1<T> body) {
         registry.add(event, body);
     }
 
     @Override
-    public boolean contains(Event event) {
+    public boolean contains(Event<?> event) {
         return registry.contains(event);
     }
 
     @Override
-    public boolean remove(Event event) {
+    public boolean remove(Event<?> event) {
         return registry.remove(event);
     }
 
     @Override
-    public Future<Event> fire(Event event, Object context) {
+    public <T> Future<Event<T>> fire(Event<T> event, T context) {
         return trigger.fire(event, context);
     }
 
     @Override
-    public List<Future<Event>> fire(Iterable<Event> events, Object context) {
+    public <T> List<Future<Event<T>>> fire(Iterable<Event<T>> events, T context) {
         return trigger.fire(events, context);
     }
 }

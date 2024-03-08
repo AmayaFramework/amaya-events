@@ -14,7 +14,7 @@ public interface EventRegistry extends EventProvider {
      * @param event the specified event, must be non-null
      * @param body  the specified event handler, must be non-null
      */
-    void set(Event event, Runnable1<?> body);
+    <T> void set(Event<T> event, Runnable1<T> body);
 
     /**
      * Adds the handler to an existing one for the specified event.
@@ -23,7 +23,7 @@ public interface EventRegistry extends EventProvider {
      * @param event the specified event, must be non-null
      * @param body  the specified event handler, must be non-null
      */
-    void add(Event event, Runnable1<?> body);
+    <T> void add(Event<T> event, Runnable1<T> body);
 
     /**
      * Checks whether the registry contains a handler for the specified event.
@@ -31,7 +31,7 @@ public interface EventRegistry extends EventProvider {
      * @param event the specified event, may be null
      * @return true if this registry contains event, false otherwise
      */
-    boolean contains(Event event);
+    boolean contains(Event<?> event);
 
     /**
      * Removes the handler of the specified event.
@@ -39,5 +39,5 @@ public interface EventRegistry extends EventProvider {
      * @param event the specified event, may be null
      * @return true if the handler was removed, false otherwise
      */
-    boolean remove(Event event);
+    boolean remove(Event<?> event);
 }
