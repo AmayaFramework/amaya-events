@@ -7,15 +7,19 @@ import java.util.Objects;
 import java.util.concurrent.Future;
 
 /**
- *
+ * A class that provides a skeletal implementation of the {@link EventManager},
+ * including the implementation of the common methods, as well as
+ * fields containing the {@link EventRegistry} and {@link EventTrigger} instances.
  */
 public abstract class AbstractEventManager implements EventManager {
     protected final EventRegistry registry;
     protected final EventTrigger trigger;
 
     /**
-     * @param registry
-     * @param trigger
+     * Constructs {@link EventManager} instance with the specified registry and trigger.
+     *
+     * @param registry the specified {@link EventRegistry} instance, must be non-null
+     * @param trigger  the specified {@link EventTrigger} instance, must be non-null
      */
     protected AbstractEventManager(EventRegistry registry, EventTrigger trigger) {
         this.registry = Objects.requireNonNull(registry);
@@ -65,5 +69,15 @@ public abstract class AbstractEventManager implements EventManager {
     @Override
     public <T> List<Future<Event<T>>> fire(Iterable<Event<T>> events, T context) {
         return trigger.fire(events, context);
+    }
+
+    @Override
+    public <T> boolean fireNow(Event<T> event, T context) throws InterruptedException {
+        return trigger.fireNow(event, context);
+    }
+
+    @Override
+    public <T> boolean fireNow(Iterable<Event<T>> events, T context) throws InterruptedException {
+        return trigger.fireNow(events, context);
     }
 }

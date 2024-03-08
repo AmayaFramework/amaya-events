@@ -15,8 +15,4 @@ final class BlockingEventManager extends AbstractEventManager {
     @Override
     public void stop() {
     }
-
-    @Override
-    public void halt() {
-    }
 }

@@ -7,14 +7,25 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+/**
+ * An implementation of the event registry that uses {@link Map}.
+ */
 public class TableEventRegistry implements EventRegistry {
     private final Map<Event<?>, Runnable1<?>> events;
 
+    /**
+     * Constructs {@link TableEventRegistry} instance with the specified {@link Map}, provided by supplier.
+     *
+     * @param supplier the specified {@link Supplier} instance, must be non-null
+     */
     @SuppressWarnings("unchecked")
     public TableEventRegistry(Supplier<Map<?, ?>> supplier) {
         this.events = (Map<Event<?>, Runnable1<?>>) supplier.get();
     }
 
+    /**
+     * Constructs {@link TableEventRegistry} instance with the {@link HashMap}.
+     */
     public TableEventRegistry() {
         this.events = new HashMap<>();
     }

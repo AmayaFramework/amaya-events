@@ -4,6 +4,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * A stub class that implements the completed {@link Future}.
+ *
  * @param <T>
  */
 public final class CompletedFuture<T> implements Future<T> {
@@ -11,12 +13,20 @@ public final class CompletedFuture<T> implements Future<T> {
     private final T value;
 
     /**
-     * @param value
+     * Constructs {@link CompletedFuture} instance with the specified resulting value.
+     *
+     * @param value the specified resulting value, may be null
      */
     public CompletedFuture(T value) {
         this.value = value;
     }
 
+    /**
+     * Creates {@link CompletedFuture} instance with null resulting value.
+     *
+     * @param <T> the type of resulting value
+     * @return {@link Future} instance
+     */
     @SuppressWarnings("unchecked")
     public static <T> Future<T> empty() {
         return (Future<T>) EMPTY;
