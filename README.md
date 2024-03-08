@@ -12,10 +12,9 @@ To install it, you will need:
 ### Features
 
 * Universal event descriptor
-* Grouping events
-* Calling events by name or by group
-* Selecting an event call policy
+* Calling events by name
 * Java concurrent api based event calls
+* Flexible and convenient implementation
 
 ## Installing
 
@@ -40,37 +39,25 @@ dependencies {
 ## Usage example
 
 ```Java
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import io.github.amayaframework.events.*;
+import java.util.concurrent.ForkJoinPool;
 
 public class Main {
-    public static void main(String[] args) {
-        // Declare events
-        var common = new EventGroup("/common");
-        var app = new EventGroup("/common/app", common);
-        var event1 = new Event(app, "event1", FirePolicy.ANY);
-        var event2 = new Event(app, "event2", FirePolicy.ANY);
-        // Define event manager
-        var factory = new ParallelManagerFactory(() -> Executors.newFixedThreadPool(2));
+    public static void main(String[] args) throws InterruptedException {
+        final var event = Event.of("CountEvent", Integer.class);
+        var factory = new ParallelManagerFactory(ForkJoinPool::commonPool);
         var manager = factory.create();
-        // Register
-        manager.set(event1, c -> System.out.println("EVENT 1"));
-        manager.set(event2, c -> System.out.println("EVENT 2"));
-        // Fire
-        manager.fire(app, null);
-        // Await for specified events
+        manager.set(event, count -> System.out.println("The count is now " + count));
+        manager.fireNow(event, 5);
         manager.stop();
     }
 }
-
 ```
 
 This code will output:
 
 ```
-EVENT 2
-EVENT 1
+The count is now 5
 ```
 
 ## Built With
