@@ -29,23 +29,24 @@ public abstract class AbstractEventTrigger implements EventTrigger {
     protected abstract Future<Event> execute(Event event, Runnable1<Object> body, Object context);
 
     @Override
+    @SuppressWarnings("unchecked")
     public Future<Event> fire(Event event, Object context) {
-        var body = provider.get(event);
-        if (body == null) {
-            return new CompletedFuture<>(null);
+        var handler = provider.get(event);
+        if (handler == null) {
+            return (Future<Event>) CompletedFuture.EMPTY;
         }
-        return execute(event, body, context);
+        return execute(event, handler, context);
     }
 
     @Override
-    public List<Future<Event>> fire(EventGroup group, Object context) {
+    public List<Future<Event>> fire(Iterable<Event> events, Object context) {
         var ret = new LinkedList<Future<Event>>();
-        var found = provider.get(group);
-        if (found == null) {
-            return ret;
-        }
-        for (var entry : found.entrySet()) {
-            ret.add(execute(entry.getKey(), entry.getValue(), context));
+        for (var event : events) {
+            var handler = provider.get(event);
+            if (handler == null) {
+                continue;
+            }
+            ret.add(execute(event, handler, context));
         }
         return ret;
     }

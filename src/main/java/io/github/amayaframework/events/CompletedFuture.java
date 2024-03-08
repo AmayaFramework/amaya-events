@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
  * @param <T>
  */
 public final class CompletedFuture<T> implements Future<T> {
+    public static final Future<?> EMPTY = new CompletedFuture<>(null);
     private final T value;
 
     /**
@@ -14,6 +15,11 @@ public final class CompletedFuture<T> implements Future<T> {
      */
     public CompletedFuture(T value) {
         this.value = value;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Future<T> empty() {
+        return (Future<T>) EMPTY;
     }
 
     @Override

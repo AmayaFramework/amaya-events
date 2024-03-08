@@ -3,7 +3,6 @@ package io.github.amayaframework.events;
 import com.github.romanqed.jfunc.Runnable1;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Future;
 
@@ -39,11 +38,6 @@ public abstract class AbstractEventManager implements EventManager {
     }
 
     @Override
-    public Map<Event, Runnable1<Object>> get(EventGroup group) {
-        return registry.get(group);
-    }
-
-    @Override
     public void set(Event event, Runnable1<?> body) {
         registry.set(event, body);
     }
@@ -54,18 +48,8 @@ public abstract class AbstractEventManager implements EventManager {
     }
 
     @Override
-    public boolean contains(EventGroup group) {
-        return registry.contains(group);
-    }
-
-    @Override
     public boolean contains(Event event) {
         return registry.contains(event);
-    }
-
-    @Override
-    public boolean remove(EventGroup group) {
-        return registry.remove(group);
     }
 
     @Override
@@ -79,7 +63,7 @@ public abstract class AbstractEventManager implements EventManager {
     }
 
     @Override
-    public List<Future<Event>> fire(EventGroup group, Object context) {
-        return trigger.fire(group, context);
+    public List<Future<Event>> fire(Iterable<Event> events, Object context) {
+        return trigger.fire(events, context);
     }
 }

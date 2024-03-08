@@ -34,10 +34,10 @@ public interface EventRegistry extends EventProvider {
     boolean contains(Event event);
 
     /**
-     * Removes the handler of the specified event
+     * Removes the handler of the specified event.
      *
-     * @param event
-     * @return
+     * @param event the specified event, may be null
+     * @return true if the handler was removed, false otherwise
      */
     boolean remove(Event event);
 }
