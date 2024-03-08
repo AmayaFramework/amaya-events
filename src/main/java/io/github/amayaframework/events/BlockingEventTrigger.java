@@ -18,10 +18,6 @@ public final class BlockingEventTrigger extends AbstractEventTrigger {
 
     @Override
     protected <T> Future<Event<T>> execute(Event<T> event, Runnable1<T> body, T context) {
-        var policy = event.getPolicy();
-        if (policy == FirePolicy.PARALLEL) {
-            throw new UnsupportedFirePolicy(policy);
-        }
         try {
             body.run(context);
         } catch (Error | RuntimeException e) {

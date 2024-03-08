@@ -23,16 +23,6 @@ public final class ParallelEventTrigger extends AbstractEventTrigger {
 
     @Override
     protected <T> Future<Event<T>> execute(Event<T> event, Runnable1<T> body, T context) {
-        if (event.getPolicy() == FirePolicy.BLOCKING) {
-            try {
-                body.run(context);
-            } catch (Error | RuntimeException e) {
-                throw e;
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
-            }
-            return new CompletedFuture<>(event);
-        }
         return executor.submit(() -> {
             try {
                 body.run(context);

@@ -9,9 +9,9 @@ public interface EventProvider {
 
     /**
      * Gets event handler by the specified event.
-     *
      * @param event the specified event, may be null
      * @return {@link Runnable1} instance or null
+     * @param <T>
      */
     <T> Runnable1<T> get(Event<T> event);
 }

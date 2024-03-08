@@ -13,6 +13,7 @@ public interface EventRegistry extends EventProvider {
      *
      * @param event the specified event, must be non-null
      * @param body  the specified event handler, must be non-null
+     * @param <T>
      */
     <T> void set(Event<T> event, Runnable1<T> body);
 
@@ -22,6 +23,7 @@ public interface EventRegistry extends EventProvider {
      *
      * @param event the specified event, must be non-null
      * @param body  the specified event handler, must be non-null
+     * @param <T>
      */
     <T> void add(Event<T> event, Runnable1<T> body);
 

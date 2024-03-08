@@ -8,30 +8,19 @@ import java.util.Objects;
 public final class Event<T> {
     private final String name;
     private final Class<T> contextType;
-    private final FirePolicy policy;
 
     /**
      * Constructs event with the specified name and policy.
      *
      * @param name   the specified event name, must be non-null
-     * @param policy the specified fire policy, must be non-null
      */
-    public Event(String name, Class<T> contextType, FirePolicy policy) {
+    public Event(String name, Class<T> contextType) {
         this.name = Objects.requireNonNull(name);
         this.contextType = Objects.requireNonNull(contextType);
-        this.policy = Objects.requireNonNull(policy);
-    }
-
-    public Event(String name, Class<T> contextType) {
-        this(name, contextType, FirePolicy.ANY);
-    }
-
-    public static <T> Event<T> of(String name, Class<T> contextType, FirePolicy policy) {
-        return new Event<>(name, contextType, policy);
     }
 
     public static <T> Event<T> of(String name, Class<T> contextType) {
-        return new Event<>(name, contextType, FirePolicy.ANY);
+        return new Event<>(name, contextType);
     }
 
     /**
@@ -45,15 +34,6 @@ public final class Event<T> {
 
     public Class<T> getContextType() {
         return contextType;
-    }
-
-    /**
-     * Returns the fire policy, specified for this event.
-     *
-     * @return {@link FirePolicy} constant
-     */
-    public FirePolicy getPolicy() {
-        return policy;
     }
 
     @Override
@@ -73,7 +53,7 @@ public final class Event<T> {
     public String toString() {
         return "Event{" +
                 "name='" + name + '\'' +
-                ", policy=" + policy +
+                ", contextType=" + contextType +
                 '}';
     }
 }
