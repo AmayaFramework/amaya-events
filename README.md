@@ -6,7 +6,7 @@ A library that implements the event system.
 
 To install it, you will need:
 
-* java 11+
+* Java 11+
 * Maven/Gradle
 
 ### Features
