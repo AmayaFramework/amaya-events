@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * A stub class that implements the completed {@link Future}.
  *
- * @param <T>
+ * @param <T> the type of the future resulting value
  */
 public final class CompletedFuture<T> implements Future<T> {
     public static final Future<?> EMPTY = new CompletedFuture<>(null);

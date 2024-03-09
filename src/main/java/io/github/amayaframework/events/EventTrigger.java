@@ -26,6 +26,7 @@ public interface EventTrigger {
      * @param context the specified context
      * @param <T>     the type of the event context
      * @return true if the handler was found, false otherwise
+     * @throws InterruptedException if the current thread was interrupted while waiting
      */
     <T> boolean fireNow(Event<T> event, T context) throws InterruptedException;
 
@@ -47,6 +48,7 @@ public interface EventTrigger {
      * @param context the specified context
      * @param <T>     the type of the event context
      * @return true if at least one handler was called, false otherwise
+     * @throws InterruptedException if the current thread was interrupted while waiting
      */
     <T> boolean fireNow(Iterable<Event<T>> events, T context) throws InterruptedException;
 }
