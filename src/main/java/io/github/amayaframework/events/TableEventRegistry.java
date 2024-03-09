@@ -20,7 +20,7 @@ public class TableEventRegistry implements EventRegistry {
      */
     @SuppressWarnings("unchecked")
     public TableEventRegistry(Supplier<Map<?, ?>> supplier) {
-        this.events = (Map<Event<?>, Runnable1<?>>) supplier.get();
+        this.events = (Map<Event<?>, Runnable1<?>>) Objects.requireNonNull(supplier.get());
     }
 
     /**
