@@ -10,9 +10,22 @@ public class EventManagerTest extends Assertions {
 
     public void testEventManager(EventManager manager) throws InterruptedException {
         var context = new Context();
-        manager.set(EVENT, ctx -> ctx.value = 5);
-        manager.fireNow(EVENT, context);
-        assertEquals(5, context.value);
+        assertAll(
+                () -> {
+                    manager.set(EVENT, ctx -> ctx.value = 5);
+                    manager.fireNow(EVENT, context);
+                    assertEquals(5, context.value);
+                },
+                () -> {
+                    var registry = manager.getRegistry();
+                    var trigger = manager.getTrigger();
+                    assertNotNull(registry);
+                    assertNotNull(trigger);
+                    registry.set(EVENT, ctx -> ctx.value = 2);
+                    trigger.fireNow(EVENT, context);
+                    assertEquals(2, context.value);
+                }
+        );
         manager.stop();
     }
 
