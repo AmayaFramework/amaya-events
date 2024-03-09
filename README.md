@@ -40,6 +40,7 @@ dependencies {
 
 ```Java
 import io.github.amayaframework.events.*;
+
 import java.util.concurrent.ForkJoinPool;
 
 public class Main {
