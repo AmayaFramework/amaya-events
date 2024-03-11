@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  * An implementation of a {@link EventManagerFactory} that creates managers
  * that use a {@link ParallelEventTrigger}.
  */
-public final class ParallelManagerFactory implements EventManagerFactory {
+public final class ParallelManagerFactory extends AbstractManagerFactory {
     private final Supplier<ExecutorService> supplier;
 
     /**
@@ -21,8 +21,7 @@ public final class ParallelManagerFactory implements EventManagerFactory {
     }
 
     @Override
-    public EventManager create() {
-        var registry = new TableEventRegistry();
+    protected EventManager uncheckedCreate(EventRegistry registry) {
         var executor = supplier.get();
         var trigger = new ParallelEventTrigger(registry, executor);
         return new ParallelEventManager(registry, trigger, executor);
