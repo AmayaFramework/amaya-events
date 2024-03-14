@@ -30,10 +30,10 @@ public class EventTriggerTest extends Assertions {
 
     public void testUnknownEvent(EventTrigger trigger) {
         assertAll(
-                () -> assertNull(trigger.fire(UNKNOWN_EVENT, null)),
-                () -> assertFalse(trigger.fireNow(UNKNOWN_EVENT, null)),
-                () -> assertTrue(trigger.fire(List.of(UNKNOWN_EVENT), null).isEmpty()),
-                () -> assertFalse(trigger.fireNow(List.of(UNKNOWN_EVENT), null))
+                () -> assertNull(trigger.fire(UNKNOWN_EVENT, (Context) null)),
+                () -> assertFalse(trigger.fireNow(UNKNOWN_EVENT, (Context) null)),
+                () -> assertTrue(trigger.fire(List.of(UNKNOWN_EVENT), (Context) null).isEmpty()),
+                () -> assertFalse(trigger.fireNow(List.of(UNKNOWN_EVENT), (Context) null))
         );
     }
 

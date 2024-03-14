@@ -2,6 +2,7 @@ package io.github.amayaframework.events;
 
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 
 /**
  * An interface describing an abstract mechanism for calling events by descriptor.
@@ -18,6 +19,8 @@ public interface EventTrigger {
      */
     <T> Future<Event<T>> fire(Event<T> event, T context);
 
+    <T> Future<Event<T>> fire(Event<T> event, Supplier<T> supplier);
+
     /**
      * Executes the handler associated with the specified event, passing the specified context to it,
      * and then blocks the calling thread until the handler call is completed.
@@ -30,6 +33,8 @@ public interface EventTrigger {
      */
     <T> boolean fireNow(Event<T> event, T context) throws InterruptedException;
 
+    <T> boolean fireNow(Event<T> event, Supplier<T> supplier) throws InterruptedException;
+
     /**
      * Executes handlers associated with the specified events, passing them the specified context.
      *
@@ -39,6 +44,8 @@ public interface EventTrigger {
      * @return a list containing all {@link Future} instances associated with the execution of the found handlers
      */
     <T> List<Future<Event<T>>> fire(Iterable<Event<T>> events, T context);
+
+    <T> List<Future<Event<T>>> fire(Iterable<Event<T>> events, Supplier<T> supplier);
 
     /**
      * Executes handlers associated with the specified events, passing them the specified context,
@@ -51,4 +58,6 @@ public interface EventTrigger {
      * @throws InterruptedException if the current thread was interrupted while waiting
      */
     <T> boolean fireNow(Iterable<Event<T>> events, T context) throws InterruptedException;
+
+    <T> boolean fireNow(Iterable<Event<T>> events, Supplier<T> supplier) throws InterruptedException;
 }

@@ -5,6 +5,7 @@ import com.github.romanqed.jfunc.Runnable1;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 
 /**
  * A class that provides a skeletal implementation of the {@link EventManager},
@@ -79,5 +80,25 @@ public abstract class AbstractEventManager implements EventManager {
     @Override
     public <T> boolean fireNow(Iterable<Event<T>> events, T context) throws InterruptedException {
         return trigger.fireNow(events, context);
+    }
+
+    @Override
+    public <T> Future<Event<T>> fire(Event<T> event, Supplier<T> supplier) {
+        return trigger.fire(event, supplier);
+    }
+
+    @Override
+    public <T> boolean fireNow(Event<T> event, Supplier<T> supplier) throws InterruptedException {
+        return trigger.fireNow(event, supplier);
+    }
+
+    @Override
+    public <T> List<Future<Event<T>>> fire(Iterable<Event<T>> events, Supplier<T> supplier) {
+        return trigger.fire(events, supplier);
+    }
+
+    @Override
+    public <T> boolean fireNow(Iterable<Event<T>> events, Supplier<T> supplier) throws InterruptedException {
+        return trigger.fireNow(events, supplier);
     }
 }

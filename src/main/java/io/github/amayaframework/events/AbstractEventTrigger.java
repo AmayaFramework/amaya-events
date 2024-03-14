@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 
 /**
  * A class that provides a skeletal implementation of an {@link EventTrigger}
@@ -88,6 +89,60 @@ public abstract class AbstractEventTrigger implements EventTrigger {
                 continue;
             }
             await(future);
+            ret = true;
+        }
+        return ret;
+    }
+
+    @Override
+    public <T> Future<Event<T>> fire(Event<T> event, Supplier<T> supplier) {
+        var handler = provider.get(event);
+        if (handler == null) {
+            return null;
+        }
+        return execute(event, handler, supplier.get());
+    }
+
+    @Override
+    public <T> boolean fireNow(Event<T> event, Supplier<T> supplier) throws InterruptedException {
+        var future = fire(event, supplier);
+        if (future == null) {
+            return false;
+        }
+        await(future);
+        return true;
+    }
+
+    @Override
+    public <T> List<Future<Event<T>>> fire(Iterable<Event<T>> events, Supplier<T> supplier) {
+        var ret = new LinkedList<Future<Event<T>>>();
+        var context = (T) null;
+        for (var event : events) {
+            var handler = provider.get(event);
+            if (handler == null) {
+                continue;
+            }
+            if (context == null) {
+                context = supplier.get();
+            }
+            ret.add(execute(event, handler, context));
+        }
+        return ret;
+    }
+
+    @Override
+    public <T> boolean fireNow(Iterable<Event<T>> events, Supplier<T> supplier) throws InterruptedException {
+        var ret = false;
+        var context = (T) null;
+        for (var event : events) {
+            var handler = provider.get(event);
+            if (handler == null) {
+                continue;
+            }
+            if (context == null) {
+                context = supplier.get();
+            }
+            await(execute(event, handler, context));
             ret = true;
         }
         return ret;
